@@ -1,0 +1,6 @@
+{
+  "operators": [ "+", "-", "*", "/", "^" ],
+  "operations": [ "Addition", "Subtraction", "Multiplication", "Division", "Square" ],
+  "unaryOperators": ["-","^"]
+  //this is the binding of operators to their operations. This should allow users to customise their operator symbols.
+}
