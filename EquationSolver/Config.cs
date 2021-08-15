@@ -50,7 +50,7 @@ namespace EquationSolver
 
         public static Config getInstance()
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = new Config();
             }

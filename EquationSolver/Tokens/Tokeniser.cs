@@ -61,7 +61,14 @@ namespace EquationSolver.Tokens
                         }
                         else //binary operator
                         {
-                            tokenString.add(new Token(TokenType.Operator, symbol.ToString()));
+                            if (symbol == '(' || symbol == ')') //if the symbol is a bracket
+                            {
+                                tokenString.add(new Token(TokenType.Bracket, symbol.ToString()));
+                            }
+                            else
+                            {
+                                tokenString.add(new Token(TokenType.Operator, symbol.ToString()));
+                            }
                         }
                     }
                     else

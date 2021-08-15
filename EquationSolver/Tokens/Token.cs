@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using EquationSolver.Operations;
 
 namespace EquationSolver.Tokens
 {
@@ -8,6 +9,7 @@ namespace EquationSolver.Tokens
     public class Token
     {
         public TokenType type;
+        public OperationType operationType;
         public string value;
         public double operandValue;
 
@@ -24,8 +26,12 @@ namespace EquationSolver.Tokens
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("None-number recognised as an operand",e);
+                    throw new Exception("Non-number recognised as an operand",e);
                 }
+            }
+            else if(type == TokenType.Operator)
+            {
+                operationType = Operators.getOperation(value);
             }
         }
     }

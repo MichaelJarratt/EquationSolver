@@ -6,6 +6,6 @@ namespace EquationSolver.Tokens
 {
     public enum TokenType
     {
-        Operator, Operand, Character
+        Operator, Operand, Character, Bracket
     }
 }
