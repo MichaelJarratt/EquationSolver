@@ -10,6 +10,8 @@ namespace EquationSolver.Operations
         Division = 90,
         Multiplication = 80,
         Addition = 70,
-        Subtraction = 60
+        Subtraction = 60,
+        OpenBracket = 110,
+        ClosedBracket = 110
     }
 }

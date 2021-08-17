@@ -36,7 +36,7 @@ namespace EquationSolver.Tokens
         /// <returns>Next Token</returns>
         public bool hasNext()
         {
-            if(index != tokens.Count-1) //if there are 5 tokens and the index is 4 (5th element) then there are no more tokens
+            if(index < tokens.Count) //if there are 5 tokens and the index is 4 (5th element) then there are no more tokens
             {
                 return true;
             }
@@ -63,25 +63,51 @@ namespace EquationSolver.Tokens
         }
 
         /// <summary>
-        /// Returns the next Token in the TokenString.
+        /// Returns the current token in the TokenString.
+        /// </summary>
+        /// <returns>Current token in the TokenString</returns>
+        public Token current()
+        {
+            return tokens[index];
+        }
+
+        /// <summary>
+        /// Returns the next token in TokenString but does not increment the index.
+        /// </summary>
+        /// <returns>Next token in TokenString</returns>
+        public Token peakNext()
+        {
+            return tokens[index + 1];
+        }
+
+        /// <summary>
+        /// Returns the next Token in the TokenString and increments the index.
         /// Make sure to use HasNext before calling this.
         /// </summary>
         /// <returns>Next Token in the TokenString</returns>
         public Token next()
         {
-            index++;
-            return tokens[index];
+            return tokens[index++]; //returns index and then post-increments it
         }
 
         /// <summary>
-        /// Returns the previous Token in the TokenString.
+        /// Returns the previous Token in the TokenString and decrements the index.
         /// Make sure to use HasPrevious before calling this.
         /// </summary>
         /// <returns>Previous Token in the TokenString</returns>
         public Token previous()
         {
-            index--;
-            return tokens[index];
+            return tokens[index++];
+        }
+
+        /// <summary>
+        /// Gets tokens at /index/
+        /// </summary>
+        /// <param name="index">Index to get token from</param>
+        /// <returns>Token at /index/</returns>
+        public Token this[int index]
+        {
+            get => tokens[index];
         }
 
         public List<Token> TokensBetween(int index)

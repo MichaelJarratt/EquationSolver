@@ -36,7 +36,7 @@ namespace EquationSolver.Tokens
                             operand = "-" + operand;
                             negativeNoMemory = false;
                         }
-                        tokenString.add(new Token(TokenType.Operand, operand));
+                        tokenString.add(new OperandToken(operand));
                     }
                     else if(!isNumber(line[i + 1])) //if the next symbol is not also a number
                     {
@@ -47,7 +47,7 @@ namespace EquationSolver.Tokens
                             operand = "-" + operand;
                             negativeNoMemory = false;
                         }
-                        tokenString.add(new Token(TokenType.Operand, operand));
+                        tokenString.add(new OperandToken(operand));
                     }
                 }
                 else //none numbers
@@ -59,16 +59,9 @@ namespace EquationSolver.Tokens
                         {
                             negativeNoMemory = true;
                         }
-                        else //binary operator
+                        else //binary operator/brackets
                         {
-                            if (symbol == '(' || symbol == ')') //if the symbol is a bracket
-                            {
-                                tokenString.add(new Token(TokenType.Bracket, symbol.ToString()));
-                            }
-                            else
-                            {
-                                tokenString.add(new Token(TokenType.Operator, symbol.ToString()));
-                            }
+                            tokenString.add(new OperatorToken(symbol.ToString()));
                         }
                     }
                     else

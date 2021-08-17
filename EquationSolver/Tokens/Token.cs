@@ -6,33 +6,13 @@ using EquationSolver.Operations;
 namespace EquationSolver.Tokens
 {
     //tokens represent parts of an equation, such as numbers and operators
-    public class Token
+    public abstract class Token
     {
-        public TokenType type;
-        public OperationType operationType;
         public string value;
-        public double operandValue;
 
-        public Token(TokenType type, String value)
+        public Token(String value)
         {
-            this.type = type;
             this.value = value;
-
-            if(type == TokenType.Operand)
-            {
-                try
-                {
-                    operandValue = double.Parse(value);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Non-number recognised as an operand",e);
-                }
-            }
-            else if(type == TokenType.Operator)
-            {
-                operationType = Operators.getOperation(value);
-            }
         }
     }
 }
