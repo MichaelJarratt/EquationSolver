@@ -54,8 +54,8 @@ namespace EquationSolver.Tokens
                 {
                     if (config.operators.Contains(symbol.ToString())) //if it is a valid operator
                     {
-                        //if the symbol is - and the previous character is not a number, or does not exist (meaning its a negative number)
-                        if (symbol == '-' && (i == 0 || (i > 0 && !isNumber(line[i - 1])))) //unary operator
+                        //if the symbol is - and the previous character is not a number, not ')', or does not exist (meaning its a negative number)
+                        if (symbol == '-' && (i == 0 || (i > 0 && !isNumber(line[i - 1]) && line[i - 1] != ')'))) //unary operator
                         {
                             negativeNoMemory = true;
                         }

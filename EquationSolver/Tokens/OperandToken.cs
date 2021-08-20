@@ -18,5 +18,10 @@ namespace EquationSolver.Tokens
                 throw new Exception("Non-number recognised as an operand", e);
             }
         }
+
+        public OperandToken(double value): base (value.ToString())
+        {
+            operandValue = value;
+        }
     }
 }

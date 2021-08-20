@@ -7,23 +7,9 @@ namespace EquationSolver
     {
         static void Main(string[] args)
         {
-            Config config = Config.getInstance();
+            double d = EquationSolver.solveEquation("(4*5)-4+6");
 
-            TokenString ts = Tokeniser.tokenise("(-2+12)*3");
-
-            Token t = ts.next();
-
-            t = ts.next();
-
-            ts.index = 6;
-
-            bool b = ts.hasNext();
-
-            t = ts.next();
-
-            b = ts.hasNext();
-
-            String s = ts.toString();
+            Console.WriteLine(d);
         }
     }
 }

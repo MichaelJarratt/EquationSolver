@@ -14,5 +14,6 @@ namespace EquationSolver.Tokens
         {
             this.value = value;
         }
+
     }
 }

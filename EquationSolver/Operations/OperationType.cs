@@ -11,7 +11,7 @@ namespace EquationSolver.Operations
         Multiplication = 80,
         Addition = 70,
         Subtraction = 60,
-        OpenBracket = 110,
-        ClosedBracket = 110
+        OpenBracket = 49,
+        ClosedBracket = 50
     }
 }
