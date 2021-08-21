@@ -7,7 +7,9 @@ namespace EquationSolver
     {
         static void Main(string[] args)
         {
-            double d = EquationSolver.solveEquation("(4*5)-4+6");
+            TokenString ts = Tokeniser.tokenise("5+6");
+
+            double d = EqSolve.solveEquation("50-20+2*100/5^2");
 
             Console.WriteLine(d);
         }

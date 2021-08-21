@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace EquationSolver.Tokens
 {
@@ -11,6 +12,8 @@ namespace EquationSolver.Tokens
 
         public static TokenString tokenise(string line)
         {
+            line = Regex.Replace(line, @"\s+", ""); //replace any whitespace with nothing
+
             TokenString tokenString = new TokenString(); //collection of Tokens
             //crawl over line and build tokens to place in TokenString
             //use config.operators to identify operators, assume numbers are operands

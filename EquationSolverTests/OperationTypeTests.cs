@@ -11,7 +11,7 @@ namespace EquationSolverTests
         {
             [TestMethod]
             public void OperatorPrecedence()
-            {
+            { 
                 Assert.IsTrue(OperationType.Addition > OperationType.Subtraction);
             }
         }

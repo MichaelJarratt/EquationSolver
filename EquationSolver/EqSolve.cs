@@ -7,7 +7,7 @@ using EquationSolver.Operations;
 namespace EquationSolver
 {
     //Algorithm yoinked from: https://www.geeksforgeeks.org/expression-evaluation/
-    public static class EquationSolver
+    public static class EqSolve
     {
         private static Stack<OperandToken> operandStack = new Stack<OperandToken>();
         private static Stack<OperatorToken> operatorStack = new Stack<OperatorToken>();

@@ -63,7 +63,8 @@ namespace EquationSolver.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///  &quot;operators&quot;: [ &quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;/&quot;, &quot;^&quot; ],
-        ///  &quot;operations&quot;: [ &quot;Addition&quot;, &quot;Subtraction&quot;, &quot;Multiplication&quot;, &quot;Division&quot;, &quot;Square&quot; ] 
+        ///  &quot;operations&quot;: [ &quot;Addition&quot;, &quot;Subtraction&quot;, &quot;Multiplication&quot;, &quot;Division&quot;, &quot;Exponent&quot; ],
+        ///  &quot;unaryOperators&quot;: [&quot;-&quot;,&quot;^&quot;]
         ///  //this is the binding of operators to their operations. This should allow users to customise their operator symbols.
         ///}.
         /// </summary>

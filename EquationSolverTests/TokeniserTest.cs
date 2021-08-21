@@ -14,6 +14,14 @@ namespace EquationSolverTests
             Token token;
 
             [TestMethod]
+            public void whitespace()
+            {
+                token = Tokeniser.tokenise("5   + 3")[1];
+
+                Assert.IsTrue(((OperatorToken)token).operationType == OperationType.Addition);
+            }
+
+            [TestMethod]
             [ExpectedException(typeof(Exception), "\"t\" is not a valid token and should have thrown an exception")]
             public void invalidInput()
             {
