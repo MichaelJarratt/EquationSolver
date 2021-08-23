@@ -11,8 +11,8 @@ namespace EquationSolver
     //this singleton class represents the JSON configuration data
     public class Config
     {
-        public List<String> operators;
-        public List<String> operations;
+        public List<String> operators = new List<string>();
+        public List<String> operations = new List<string>();
 
         public Dictionary<string, Decimal> constants = new Dictionary<string, Decimal>();
 
@@ -26,22 +26,14 @@ namespace EquationSolver
             string content = File.ReadAllText("../../../config.json");
             JObject data = JObject.Parse(content);
 
-            //operators
-            try
+            //Operators
+            var jOperators = data["operators"].Children();
+            foreach (var operation in jOperators)
             {
-                operators = data.SelectToken("operators").ToObject<List<String>>(); //JArray object selected from data and converted to normal array
-                operations = data.SelectToken("operations").ToObject<List<String>>();
+                operators.Add(operation[0].ToObject<string>()); //operator (e.g. +)
+                operations.Add(operation[1].ToObject<string>()); //operation (e.g. Addition)
             }
-            catch (Exception e)
-            {
-                throw new Exception("JSON formatting error", e);
-            }
-
-            if(operators.Count != operations.Count)
-            {
-                throw new Exception("Number of operators do not match the number of operations");
-            }
-            if(containsNumber(operators)) //a number here may confuse the tokeniser, a number cannot be an operator regardless
+            if (containsNumber(operators)) //a number here may confuse the tokeniser, a number cannot be an operator regardless
             {
                 throw new Exception("Numbers cannot be operators");
             }
@@ -57,7 +49,7 @@ namespace EquationSolver
             Decimal value;
             foreach (var constant in jConstants)
             {
-                key = constant[0].ToObject<string>();
+                key = constant[0].ToObject<string>(); 
                 value = constant[1].ToObject<Decimal>();
                 constants.Add(key, value);
             }

@@ -1,9 +1,15 @@
 {
-  "operators": [ "+", "-", "*", "/", "^" ],
-  "operations": [ "Addition", "Subtraction", "Multiplication", "Division", "Exponent" ],
-  //this is the binding of operators to their operations. This should allow users to customise their operator symbols.
-  "unaryOperators": [ "-" ],
-  "constants": [
+  "operators": 
+  [
+    [ "+", "Addition" ],
+    [ "-", "Subtraction" ],
+    [ "*", "Multiplication" ],
+    [ "/", "Division" ],
+    [ "^", "Exponent" ]
+  ],
+
+  "constants": //here users can define their own constants. A constant can be any sequece of characters that does not include [0-9], '.' or an operator.
+  [
     [ "test_constant_A", 50 ],
     [ "test_constant_B", 25 ]
   ]
