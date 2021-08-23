@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using EquationSolver.Properties;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace EquationSolver
 {
@@ -12,6 +13,8 @@ namespace EquationSolver
     {
         public List<String> operators;
         public List<String> operations;
+
+        public Dictionary<string, Decimal> constants = new Dictionary<string, Decimal>();
 
         //private static String configPath = @"config.json";
         private static Config instance; //singleton instance
@@ -23,6 +26,7 @@ namespace EquationSolver
             string content = File.ReadAllText("../../../config.json");
             JObject data = JObject.Parse(content);
 
+            //operators
             try
             {
                 operators = data.SelectToken("operators").ToObject<List<String>>(); //JArray object selected from data and converted to normal array
@@ -45,7 +49,19 @@ namespace EquationSolver
             //Brackets are always present and so are hard coded and not included in the JSON
             operators.Add("(");
             operators.Add(")");
+            //!operators
 
+            //constants
+            var jConstants = data["constants"].Children();
+            string key;
+            Decimal value;
+            foreach (var constant in jConstants)
+            {
+                key = constant[0].ToObject<string>();
+                value = constant[1].ToObject<Decimal>();
+                constants.Add(key, value);
+            }
+            //!constants
         }
 
         public static Config getInstance()
@@ -81,6 +97,7 @@ namespace EquationSolver
         private char[] operatorCharArray()
         {
             throw new NotImplementedException();
-        }
+        } 
+
     }
 }

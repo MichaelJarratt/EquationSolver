@@ -18,7 +18,7 @@ namespace EquationSolver
         /// </summary>
         /// <param name="equation">Equation to solve</param>
         /// <returns>Solution of equation</returns>
-        public static double solveEquation(string equation)
+        public static Decimal solveEquation(string equation)
         {
             TokenString tokenString = Tokeniser.tokenise(equation);
             Token token; OperatorToken opToken; OperandToken operandToken; //allocations for current token
@@ -87,7 +87,7 @@ namespace EquationSolver
         {
             OperandToken operandToken = operandStack.Pop();
             //do calculation
-            double sum = calculate(operandStack.Pop().operandValue, operatorStack.Pop().operationType, operandToken.operandValue);
+            Decimal sum = calculate(operandStack.Pop().operandValue, operatorStack.Pop().operationType, operandToken.operandValue);
             operandStack.Push(new OperandToken(sum)); //push value back on to operand stack
         }
 
@@ -99,7 +99,7 @@ namespace EquationSolver
         /// <param name="operation">The Operation to be performed</param>
         /// <param name="opB">The second operand, value does not matter for unary operations</param>
         /// <returns>Calculated Value</returns>
-        private static double calculate(double opA, OperationType operation, double opB)
+        private static Decimal calculate(Decimal opA, OperationType operation, Decimal opB)
         {
             return calculate(operation, opA, opB);
         }
@@ -112,12 +112,13 @@ namespace EquationSolver
         /// <param name="opA">The first operand</param>
         /// <param name="opB">The second operand, value does not matter for unary operations</param>
         /// <returns>Calculated value</returns>
-        private static double calculate(OperationType operation, double opA, double opB)
+        private static Decimal calculate(OperationType operation, Decimal opA, Decimal opB)
         {
             switch (operation)
             {
                 case OperationType.Exponent:
-                    return Math.Pow(opA, opB);
+                    //the alternative is to download a user library to use decimals, I'll just take the loss of precision
+                    return (Decimal)Math.Pow((double)opA, (double)opB);
                 case OperationType.Division:
                     return opA / opB;
                 case OperationType.Multiplication:

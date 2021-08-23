@@ -26,22 +26,13 @@ namespace EquationSolver.Tokens
                 symbol = line[i];
                 if(isNumber(symbol)) //numbers
                 {
-                    if(firstNo == -1) //first number in this sequece ("25+35" firstNo will be both 2 or 3)
+                    bool lastSymbol = (i == line.Length - 1);
+                    if (firstNo == -1) //first number in this sequece ("25+35" firstNo will be both 2 or 3)
                     {
                         firstNo = i; //mark the index of the first number
                     }
-                    if(i == line.Length-1) //if this is the last symbol in the list
-                    {
-                        string operand = line.Substring(firstNo, (i+1) - firstNo);
-                        firstNo = -1;
-                        if(negativeNoMemory) //the number is negative
-                        {
-                            operand = "-" + operand;
-                            negativeNoMemory = false;
-                        }
-                        tokenString.add(new OperandToken(operand));
-                    }
-                    else if(!isNumber(line[i + 1])) //if the next symbol is not also a number
+                    //if it's the last symbol OR the next symbol is not a number AND not '.'
+                    if(lastSymbol || (!lastSymbol && (!isNumber(line[i + 1]) && line[i + 1] != '.')))
                     {
                         string operand = line.Substring(firstNo, (i+1) - firstNo);
                         firstNo = -1;
@@ -67,7 +58,7 @@ namespace EquationSolver.Tokens
                             tokenString.add(new OperatorToken(symbol.ToString()));
                         }
                     }
-                    else
+                    else if(symbol != '.') //if it's anything other than .
                     {
                         throw new Exception($"Unrecognised Operator \"{symbol}\"");
                     }

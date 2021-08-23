@@ -1,6 +1,11 @@
 {
   "operators": [ "+", "-", "*", "/", "^" ],
   "operations": [ "Addition", "Subtraction", "Multiplication", "Division", "Exponent" ],
-  "unaryOperators": ["-"]
   //this is the binding of operators to their operations. This should allow users to customise their operator symbols.
+  "unaryOperators": [ "-" ],
+  "constants": [
+    [ "a", 1 ],
+    [ "b", 2 ],
+    [ "multi-word-constant", 90000000 ]
+  ]
 }

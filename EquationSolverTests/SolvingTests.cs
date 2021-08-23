@@ -1,6 +1,6 @@
 ﻿using EquationSolver;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using System;
 
 namespace EquationSolverTests
 {
@@ -9,13 +9,13 @@ namespace EquationSolverTests
         [TestClass]
         public class SolvingTests
         {
-            double result;
+            Decimal result;
 
             [TestMethod]
             public void Addition()
             {
                 result = EqSolve.solveEquation("2 + 4");
-                Assert.IsTrue(result == 6);
+                Assert.IsTrue(result == 6m);
             }
 
             [TestMethod]
@@ -65,6 +65,13 @@ namespace EquationSolverTests
             {
                 result = EqSolve.solveEquation("60-20+2*100/5^2");
                 Assert.IsTrue(result == 32);
+            }
+
+            [TestMethod]
+            public void decimals()
+            {
+                result = EqSolve.solveEquation("5.5+4.5");
+                Assert.IsTrue(result == 10);
             }
     }
     }

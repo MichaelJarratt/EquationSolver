@@ -44,5 +44,23 @@ namespace EquationSolver.Operations
         {
             return getOperation(op.ToString());
         }
+
+        /// <summary>
+        /// Returns the operator associated with the provided operation
+        /// </summary>
+        /// <param name="operation">Operation enumeration</param>
+        /// <returns>The associated operator</returns>
+        public static string operatorOf(OperationType operation)
+        {
+            int operationIndex = config.operations.IndexOf(operation.ToString());
+            if(operationIndex != -1)
+            {
+                return config.operators[operationIndex];
+            }
+            else
+            {
+                throw new Exception($"Operation \"{operation}\" does not have a corresponding operator");
+            }
+        }
     }
 }

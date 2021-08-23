@@ -6,12 +6,12 @@ namespace EquationSolver.Tokens
 {
     public class OperandToken : Token
     {
-        public double operandValue;
+        public Decimal operandValue;
         public OperandToken(String value) : base(value)
         {
             try
             {
-                operandValue = double.Parse(value);
+                operandValue = Decimal.Parse(value);
             }
             catch (FormatException e)
             {
@@ -19,7 +19,7 @@ namespace EquationSolver.Tokens
             }
         }
 
-        public OperandToken(double value): base (value.ToString())
+        public OperandToken(Decimal value): base (value.ToString())
         {
             operandValue = value;
         }

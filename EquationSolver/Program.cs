@@ -7,9 +7,11 @@ namespace EquationSolver
     {
         static void Main(string[] args)
         {
-            TokenString ts = Tokeniser.tokenise("5+6");
+            Config config = Config.getInstance();
 
-            double d = EqSolve.solveEquation("50-20+2*100/5^2");
+            TokenString ts = Tokeniser.tokenise("5.6+4.4");
+
+            Decimal d = EqSolve.solveEquation("5.6+4.4");
 
             Console.WriteLine(d);
         }
