@@ -21,12 +21,14 @@ namespace EquationSolver.Tokens
             char symbol;
             bool negativeNoMemory = false; 
             int firstNo = -1; //index of a number is marked so that multiple numerical characters can be taken as a substring and converted to a token
+            int firstChar = -1;
             for (int i = 0; i < line.Length; i++)
             {
                 symbol = line[i];
-                if(isNumber(symbol)) //numbers
+                bool lastSymbol = (i == line.Length - 1);
+
+                if (isNumber(symbol)) //numbers
                 {
-                    bool lastSymbol = (i == line.Length - 1);
                     if (firstNo == -1) //first number in this sequece ("25+35" firstNo will be both 2 or 3)
                     {
                         firstNo = i; //mark the index of the first number
@@ -44,12 +46,12 @@ namespace EquationSolver.Tokens
                         tokenString.add(new OperandToken(operand));
                     }
                 }
-                else //none numbers
+                else //non-numbers
                 {
-                    if (config.operators.Contains(symbol.ToString())) //if it is a valid operator
+                    if (isOperator(symbol)) //if it is a valid operator
                     {
-                        //if the symbol is - and the previous character is not a number, not ')', or does not exist (meaning its a negative number)
-                        if (symbol == '-' && (i == 0 || (i > 0 && !isNumber(line[i - 1]) && line[i - 1] != ')'))) //unary operator
+                        //if the symbol is - and the previous character is an operator, not ')', or does not exist (meaning its a negative number)
+                        if (symbol == '-' && (i == 0 || (i > 0 && isOperator(line[i - 1]) && line[i - 1] != ')'))) //unary operator
                         {
                             negativeNoMemory = true;
                         }
@@ -60,7 +62,27 @@ namespace EquationSolver.Tokens
                     }
                     else if(symbol != '.') //if it's anything other than .
                     {
-                        throw new Exception($"Unrecognised Operator \"{symbol}\"");
+                        if (firstChar == -1) //first character in this sequece ("Const+Ant" firstChar will be both C or A)
+                        {
+                            firstChar = i; //mark the index of the first character
+                        }
+                        //if it's the last symbol OR the next symbol is a number OR operator
+                        if (lastSymbol || !lastSymbol && (isNumber(line[i + 1]) || isOperator(line[i + 1])))
+                        {
+                            string constant = line.Substring(firstChar, (i + 1) - firstChar);
+                            firstChar = -1;
+
+                            decimal operand;
+                            if(config.constants.TryGetValue(constant, out operand))
+                            {
+                                tokenString.add(new ConstantToken(operand, constant));
+                            }
+                            else
+                            {
+                                throw new Exception($"Unrecognised constant \\{constant}\\");
+                            }
+                        }
+                        //throw new Exception($"Unrecognised Operator \"{symbol}\"");
                     }
                 }
             }
@@ -71,9 +93,10 @@ namespace EquationSolver.Tokens
         }
 
         /// <summary>
-        /// Determine is a syombol is a number
+        /// Determine is a symbol is a number
         /// </summary>
-        /// <param name="symbol">Bool is number</param>
+        /// <param name="symbol">Character to check</param>
+        /// <returns>Bool is number</returns>
         private static bool isNumber(Char symbol)
         {
             if(Char.GetNumericValue(symbol) != -1) //non-numbers return -1
@@ -84,6 +107,15 @@ namespace EquationSolver.Tokens
             {
                 return false;
             }
+        }
+        /// <summary>
+        /// Determine is a symbol is an operator
+        /// </summary>
+        /// <param name="symbol">Character to check</param>
+        /// <returns>Bool is operator</returns>
+        private static bool isOperator(Char symbol)
+        {
+            return config.operators.Contains(symbol.ToString());
         }
     }
 }

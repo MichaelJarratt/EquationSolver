@@ -9,9 +9,9 @@ namespace EquationSolver
         {
             Config config = Config.getInstance();
 
-            TokenString ts = Tokeniser.tokenise("5.6+4.4");
+            TokenString ts = Tokeniser.tokenise("test_constant_A-test_constant_B");
 
-            Decimal d = EqSolve.solveEquation("5.6+4.4");
+            Decimal d = EqSolve.solveEquation("test_constant_A-test_constant_B");
 
             Console.WriteLine(d);
         }

@@ -4,8 +4,7 @@
   //this is the binding of operators to their operations. This should allow users to customise their operator symbols.
   "unaryOperators": [ "-" ],
   "constants": [
-    [ "a", 1 ],
-    [ "b", 2 ],
-    [ "fuck json.net", 90000000 ]
+    [ "test_constant_A", 50 ],
+    [ "test_constant_B", 25 ]
   ]
 }

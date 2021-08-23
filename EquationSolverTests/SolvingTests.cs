@@ -73,6 +73,13 @@ namespace EquationSolverTests
                 result = EqSolve.solveEquation("5.5+4.5");
                 Assert.IsTrue(result == 10);
             }
+
+            [TestMethod]
+            public void constants()
+            {
+                result = EqSolve.solveEquation("test_constant_A / test_constant_B");
+                Assert.IsTrue(result == 2);
+            }
     }
     }
 }
