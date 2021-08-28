@@ -36,14 +36,16 @@ namespace EquationSolver.Tokens
                     //if it's the last symbol OR the next symbol is not a number AND not '.'
                     if(lastSymbol || (!lastSymbol && (!isNumber(line[i + 1]) && line[i + 1] != '.')))
                     {
-                        string operand = line.Substring(firstNo, (i+1) - firstNo);
-                        firstNo = -1;
+                        string operand = line.Substring(firstNo, (i+1) - firstNo); //extract string number
                         if (negativeNoMemory) //the number is negative
                         {
                             operand = "-" + operand;
                             negativeNoMemory = false;
+                            firstNo--; //decrement so that the position of the token is the position of the negation operator.
                         }
-                        tokenString.add(new OperandToken(operand));
+                        tokenString.add(new OperandToken(operand, firstNo+1));
+
+                        firstNo = -1;
                     }
                 }
                 else //non-numbers
@@ -57,7 +59,7 @@ namespace EquationSolver.Tokens
                         }
                         else //binary operator/brackets
                         {
-                            tokenString.add(new OperatorToken(symbol.ToString()));
+                            tokenString.add(new OperatorToken(symbol.ToString(), i+1));
                         }
                     }
                     else if(symbol != '.') //if it's anything other than .
@@ -70,17 +72,18 @@ namespace EquationSolver.Tokens
                         if (lastSymbol || !lastSymbol && (isNumber(line[i + 1]) || isOperator(line[i + 1])))
                         {
                             string constant = line.Substring(firstChar, (i + 1) - firstChar);
-                            firstChar = -1;
 
                             decimal operand;
                             if(config.constants.TryGetValue(constant, out operand))
                             {
-                                tokenString.add(new ConstantToken(operand, constant));
+                                tokenString.add(new ConstantToken(operand, constant, firstChar+1));
                             }
                             else
                             {
                                 throw new Exception($"Unrecognised constant \\{constant}\\");
                             }
+
+                            firstChar = -1;
                         }
                         //throw new Exception($"Unrecognised Operator \"{symbol}\"");
                     }
