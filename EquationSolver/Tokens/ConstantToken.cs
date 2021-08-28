@@ -6,7 +6,7 @@ namespace EquationSolver.Tokens
 {
     public class ConstantToken : OperandToken
     {
-        string constant;
+        public string constant;
 
         /// <summary>
         /// Construct Token without position

@@ -83,6 +83,24 @@ namespace EquationSolverTests
 
                 Assert.IsTrue(((OperandToken)token).operandValue == -54321);
             }
+
+            [TestMethod]
+            public void tokenPosition()
+            {
+                //checking position of addition operator
+                token = Tokeniser.tokenise("(2+3)*5")[2];
+
+                Assert.IsTrue(token.position == 3);
+            }
+
+            [TestMethod]
+            public void multiCharTokenPosition()
+            {
+                //testing position of 345 starts at 4
+                token = Tokeniser.tokenise("(2+345)*5")[3];
+
+                Assert.IsTrue(token.position == 4);
+            }
     }
     }
 }

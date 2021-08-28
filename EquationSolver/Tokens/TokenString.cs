@@ -52,7 +52,7 @@ namespace EquationSolver.Tokens
         /// <returns>Previous Token</returns>
         public bool hasPrevious()
         {
-            if(index > 0) //if index is 1 or more then there is at least one previous Token
+            if(index > 1) //if index is 2 or more then there is at least one previous Token (after calling first next, returned token is at 0, but index is post-incremented to 1)
             {
                 return true;
             }
@@ -77,7 +77,16 @@ namespace EquationSolver.Tokens
         /// <returns>Next token in TokenString</returns>
         public Token peakNext()
         {
-            return tokens[index + 1];
+            return tokens[index]; //current index because next post-increments index
+        }
+
+        /// <summary>
+        /// Returns the previous token in TokenString but does not decrement the index.
+        /// </summary>
+        /// <returns>Previous token in TokenString</returns>
+        public Token peakPrevious()
+        {
+            return tokens[index - 2]; //minus 2 because next post-increments index
         }
 
         /// <summary>
@@ -97,7 +106,7 @@ namespace EquationSolver.Tokens
         /// <returns>Previous Token in the TokenString</returns>
         public Token previous()
         {
-            return tokens[index++];
+            return tokens[--index-1];
         }
 
         /// <summary>
@@ -108,6 +117,15 @@ namespace EquationSolver.Tokens
         public Token this[int index]
         {
             get => tokens[index];
+        }
+
+        /// <summary>
+        /// Removes token at given index
+        /// </summary>
+        /// <param name="index">Index to remove token from</param>
+        public void removeAt(int index)
+        {
+            tokens.RemoveAt(index);
         }
 
         public List<Token> TokensBetween(int index)
