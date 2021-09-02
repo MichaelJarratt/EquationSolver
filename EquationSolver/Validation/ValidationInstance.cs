@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace EquationSolver.Validation
 {
@@ -28,6 +29,15 @@ namespace EquationSolver.Validation
         public ValidationObject this[int index]
         {
             get => offences[index];
+        }
+
+        /// <summary>
+        /// Order is not gaurenteed because of the way brackets are handled.
+        /// Call this function when the last ValidationObject has been added to order them by position.
+        /// </summary>
+        public void orderCollection()
+        {
+            offences = offences.OrderBy(t => t.token.position).ToList();
         }
     }
 }

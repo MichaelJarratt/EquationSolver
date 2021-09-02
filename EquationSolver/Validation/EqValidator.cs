@@ -131,15 +131,66 @@ namespace EquationSolver.Validation
 
             }
 
-            if (openBrackets > closedBrackets) //search for the offending bracket 
+            if (openBrackets > closedBrackets) //search for the offending bracket/s
             {
-                addOffence("Uncoupled Open bracket.");
+                Stack<Token> openBracketStack = new Stack<Token>();
+                equation.index = 0;
+                //iterate over TokenString from left to right
+                while(equation.hasNext())
+                {
+                    token = equation.next();
+                    if(token is OperatorToken)
+                    {
+                        operatorToken = (OperatorToken)token;
+                        if (operatorToken.operationType == OperationType.OpenBracket) //push open brackets to stack
+                        {
+                            openBracketStack.Push(token);
+                        }
+                        else if (operatorToken.operationType == OperationType.ClosedBracket) //pop them when a closing pair is found
+                        {
+                            openBracketStack.Pop();
+                        }
+                    }
+                }
+                //every open bracket left in the stack is unpaired
+                while(openBracketStack.Count > 0)
+                {
+                    token = openBracketStack.Pop();
+                    addOffence(token);
+                }
+
+                //addOffence("Uncoupled Open bracket.");
             }
+            //iterate right to left for closed brackets
             else if (closedBrackets > openBrackets)
             {
-                addOffence("Uncoupled Closed bracket.");
+                Stack<Token> closedBracketStack = new Stack<Token>();
+                equation.setToEnd(); //goes to last index
+
+                while (equation.hasPrevious())
+                {
+                    token = equation.previous();
+                    if (token is OperatorToken)
+                    {
+                        operatorToken = (OperatorToken)token;
+                        if (operatorToken.operationType == OperationType.ClosedBracket) //push closed brackets to stack
+                        {
+                            closedBracketStack.Push(token);
+                        }
+                        else if (operatorToken.operationType == OperationType.OpenBracket) //pop them when an opening pair is found
+                        {
+                            closedBracketStack.Pop();
+                        }
+                    }
+                }
+                while(closedBracketStack.Count > 0)
+                {
+                    token = closedBracketStack.Pop();
+                    addOffence(token);
+                }
             }
 
+            valInstance.orderCollection(); //orders offenced from first to last
             return valInstance;
         }
 

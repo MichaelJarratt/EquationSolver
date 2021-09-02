@@ -11,7 +11,7 @@ namespace EquationSolver
             //Config config = Config.getInstance();
 
 
-            ValidationInstance valInstance = EqValidator.isValid("/(1+2+*^)(");
+            ValidationInstance valInstance = EqValidator.isValid(")/(1+2+*^))");
 
             Decimal d = EqSolve.solveEquation("test_constant_A-test_constant_B");
 

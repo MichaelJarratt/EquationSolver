@@ -128,6 +128,15 @@ namespace EquationSolver.Tokens
             tokens.RemoveAt(index);
         }
 
+        /// <summary>
+        /// Sets the index of the tokenString to the final token.
+        /// Best used when intending to traverse backwards
+        /// </summary>
+        public void setToEnd()
+        {
+            index = tokens.Count+1;
+        }
+
         public List<Token> TokensBetween(int index)
         {
             return TokensBetween(index, this.index); //tokens between supplied index and current TokenString index
