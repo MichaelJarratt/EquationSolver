@@ -1,0 +1,5 @@
+--features--
+identify if the content between brackets is valid (e.g. "(())" while having no mismatched brackets is not valid)
+
+--edge cases--
+an equal number of open and closed brackets, but not actually being closed (e.g. ")(")

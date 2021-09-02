@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using EquationSolver.Tokens;
 using EquationSolver.Operations;
+using EquationSolver.Validation;
 
 namespace EquationSolver
 {
@@ -13,15 +14,91 @@ namespace EquationSolver
         private static Stack<OperatorToken> operatorStack = new Stack<OperatorToken>();
 
         /// <summary>
+        /// Takes an equation in string format and validates and solves it.
+        /// Returns a SolveResult object, which contains a success status and the result (if successful) or ValidationInstance(if not).
+        /// </summary>
+        /// <param name="equation">Equation to solve in string format</param>
+        /// <returns></returns>
+        public static SolveResult solveEquation(string equation)
+        {
+            TokenString tsEquation = Tokeniser.tokenise(equation); //tokenise once
+            ValidationInstance valInstance = EqValidator.isValid(tsEquation);
+
+            if(!valInstance.valid) //fails validation
+            {
+                return SolveResult.failed(valInstance);
+            }
+            else
+            {
+                decimal result = solveEquationInternal(tsEquation);
+                return SolveResult.succeeded(result);
+            }
+        }
+
+        /// <summary>
+        /// Takes an equation in TokenString format and returns the calculated value.
+        /// If validate = true will throw a ValidationException if validation fails.
+        /// ValidationException contains a ValidationInstance, which will give the reasons it failed to validate.
+        /// </summary>
+        /// <param name="equation">Equation to solve</param>
+        /// <param name="validate">Validate the equation before solving</param>
+        /// <returns>Solution to equation</returns>
+        public static Decimal solveEquation(TokenString equation, bool validate)
+        {
+            if(!validate)
+            {
+                return solveEquationInternal(equation);
+            }
+            else
+            {
+                ValidationInstance valInstance = EqValidator.isValid(equation);
+                if (valInstance.valid)
+                {
+                    return solveEquationInternal(equation);
+                }
+                else
+                {
+                    throw new ValidationException("Equation failed to validate. Refer to the ValididationInstance to find out why.", valInstance);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Takes an equation in string format and returns the calculated value.
+        /// If validate = true will throw a ValidationException if validation fails.
+        /// ValidationException contains a ValidationInstance, which will give the reasons it failed to validate.
+        /// </summary>
+        /// <param name="equation">Equation to solve</param>
+        /// <param name="validate">Validate the equation before solving</param>
+        /// <returns>Solution to equation</returns>
+        public static Decimal solveEquation(string equation, bool validate)
+        {
+            TokenString tsEquation = Tokeniser.tokenise(equation);
+            return solveEquation(tsEquation, validate);
+        }
+
+        /// <summary>
         /// Takes an equation in a string format and returns the calculated result.
         /// Example of equation - (3*-5)+5-1
         /// </summary>
-        /// <param name="equation">Equation to solve</param>
+        /// <param name="equation">Equation to solve in string format</param>
         /// <returns>Solution of equation</returns>
-        public static Decimal solveEquation(string equation)
+        private static Decimal solveEquationInternal(string equation)
         {
             TokenString tokenString = Tokeniser.tokenise(equation);
+            return solveEquationInternal(tokenString);
+        }
+
+        /// <summary>
+        /// Takes an equation in a string format and returns the calculated result.
+        /// Example of equation - (3*-5)+5-1
+        /// </summary>
+        /// <param name="equation">Equation to solve in TokenString format</param>
+        /// <returns>Solution of equation</returns>
+        private static Decimal solveEquationInternal(TokenString tokenString)
+        {
             Token token; OperatorToken opToken; OperandToken operandToken; //allocations for current token
+            tokenString.index = 0;
 
             while(tokenString.hasNext()) //pass through whole set of tokens
             {

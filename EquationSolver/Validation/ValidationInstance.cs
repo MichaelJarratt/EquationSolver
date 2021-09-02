@@ -5,7 +5,10 @@ using System.Linq;
 
 namespace EquationSolver.Validation
 {
-    //This class acts as a collection of validation failures to be passed to the invoker.
+    /// <summary>
+    /// Validation Instance of a collection of ValidationObjects pertaining to the validation of a particular equation.
+    /// A ValidationObject represents a single validation failure.
+    /// </summary>
     public class ValidationInstance
     {
         public bool valid = true; //did the entire equation validate?

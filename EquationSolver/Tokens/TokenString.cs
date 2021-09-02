@@ -4,7 +4,10 @@ using System.Text;
 
 namespace EquationSolver.Tokens
 {
-    //this class is a collection of tokens that can be iterated over
+    /// <summary>
+    /// This class is a collection of tokens that represent an equation. Methods are offered for traversing and manipulating
+    /// its content.
+    /// </summary>
     public class TokenString
     {
         private List<Token> tokens = new List<Token>();
